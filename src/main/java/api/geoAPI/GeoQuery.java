@@ -129,7 +129,7 @@ public class GeoQuery {
 					     url = "http://localhost:8080/SOPOpenAPI/OpenAPI3/addr/geocode.json?accessToken=BYPASS&absmatch=1&address="; //로컬
 					     //url = "http://localhost:8080/SOPOpenAPI/OpenAPI3/addr/geocodewgs84.json?accessToken=BYPASS&absmatch=1&address="; //wgs84
 			   }else if(type.equals("gsks")) {
-					     url = "http://10.175.80.206/SOPOpenAPI/OpenAPI3/addr/geocode.json?accessToken=BYPASS&absmatch=1&address=";	 //내부망 (운영이라 매달 루신,사전 확인할 때만 테스트하기)
+					     url = "http://숨김처리/SOPOpenAPI/OpenAPI3/addr/geocode.json?accessToken=BYPASS&absmatch=1&address=";	 //내부망 (운영이라 매달 루신,사전 확인할 때만 테스트하기)
 			   }
 			   
 			   //※주소값 튜닝하여 URL 적재 final_address  	       		 		   
