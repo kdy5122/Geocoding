@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+			xmlns:context="http://www.springframework.org/schema/context" 
+			xsi:schemaLocation="http://www.springframework.org/schema/beans    http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+			http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+			 http://www.springframework.org/schema/context
+        	http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+	
+	<context:component-scan base-package="controller.view">
+	</context:component-scan>
+	<context:component-scan base-package="api.geoAPI">
+	</context:component-scan>
+	<!-- bean : 객체 , baen 의 class : 해당빈이 어떤 클래스를 인스턴스화 , property : bean의 속성-->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+	    <property name="alwaysUseFullPath" value="true"></property>
+	</bean>
+	 
+	<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping">
+	    <property name="alwaysUseFullPath" value="true"></property>
+	</bean>
+	
+    <!-- view 처리 -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 카이로스 연결 -->
+	<bean id="dataSource-kairos" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">		  
+		 <property name="driverClassName" value="kr.co.realtimetech.kairos.jdbc.kairosDriver"/>
+         <property name="url" value="jdbc:kairos://10.184.85.23:60000/SGIS_DB" />
+         <property name="username" value="root"/>
+         <property name="password" value="root"/>         
+         <property name="validationQuery" value="SELECT 1 FROM DUAL"/>
+         <property name="initialSize" value="1" />
+		 <property name="maxActive" value="2" />
+		 <property name="maxIdle" value="2" />
+		 <property name="minIdle" value="1" />
+		 <property name="minEvictableIdleTimeMillis" value="300000" />	
+		 <property name="timeBetweenEvictionRunsMillis" value="300000" />
+		 <property name="numTestsPerEvictionRun" value="5" />
+		 <property name="testOnBorrow" value="true" />
+		 <property name="testWhileIdle" value="true" />
+		 <property name="testOnReturn" value="false" />
+     </bean>
+     
+<!--      <bean id="db.dataSource" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+     <!-- sqlSession 처리 -->
+     <bean id="db.dataSource" class="api.geoAPI.RefreshableSqlSessionFactoryBean"> <!-- mybatis 실시간 쿼리 적용 -->
+		<property name="dataSource" ref="dataSource-kairos"/>
+		<property name="configLocation" value="/conf/dbms-config.xml"/>
+		<property name="mapperLocations" value="classpath*:api/**/*.xsql"/>
+		<property name="interval" value="1000" />
+	</bean>
+	
+<!-- 	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionFactoryBean"> -->
+<!-- 		<property name="dataSource" ref="dataSource-kairos"/> -->
+<!-- 		<property name="configLocation" value="/conf/dbms-config.xml"/> -->
+<!-- 		<property name="mapperLocations" value="classpath*:api/**/*.xsql"/> -->
+<!-- 	</bean> -->
+	 <!-- SqlSessionTemplate 처리 -->
+     <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate" scope="prototype">
+  		<constructor-arg index="0" ref="db.dataSource" />
+	</bean>
+	
+<!-- 	<bean name="/geoAPI/query.*" class="api.geoAPI.geoQuery"> -->
+<!-- 		<property name="sqlSession" ref="sqlSessionTemplate" /> -->
+<!-- 	</bean> -->
+    <mvc:annotation-driven/>
+</beans>

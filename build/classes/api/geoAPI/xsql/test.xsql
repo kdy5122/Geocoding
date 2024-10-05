@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="api.geoAPI.xsql.GeoAPI">
+
+<!--쿼리 실시간 적용-->
+<!--java.util.LinkedHashMap 으로 select 결과 순으로 출력-->
+<select id="test" parameterType="hashmap" resultType="java.util.LinkedHashMap">   
+		${query}
+</select>
+
+<!--<select id="bulk" parameterType="hashmap" resultType="java.util.LinkedHashMap" >   
+select link_id_seq , itm_id , org_id , tbl_id , dt, link_id ,prd_de , c1,create_dt, prd_se , itm_nm , itm_nm_eng , tbl_nm , unit_nm , unit_nm_eng, c1_nm ,
+c1_nm_eng, c1_obj_nm , c1_obj_nm_eng , c2, c2_nm , c2_nm_eng , c2_obj_nm , c2_obj_nm_eng , coalesce(c3, '') as c3  , coalesce(c3_nm, '') as c3_nm , coalesce(c3_nm_eng, '') as c3_nm_eng  ,
+coalesce(c3_obj_nm, '') as c3_obj_nm  , coalesce(c3_obj_nm_eng, '') as c3_obj_nm_eng
+from srv_dt_kosis_data where link_id ='I3103' AND PRD_DE > 202000 AND PRD_DE <202100
+</select>
+-->
+
+
+<!--<insert id="bulkinsert" parameterType="hashMap">   
+INSERT INTO srv_dt_kosis_data_0409_test
+(
+	LINK_ID_SEQ
+	,ITM_ID
+	,ORG_ID
+	,TBL_ID
+	,DT
+	,LINK_ID
+	,PRD_DE
+	,C1
+	,CREATE_DT
+	,PRD_SE
+	,ITM_NM
+	,ITM_NM_ENG
+	,TBL_NM
+	,UNIT_NM
+	,UNIT_NM_ENG
+	,C1_NM
+	,C1_NM_ENG
+	,C1_OBJ_NM
+	,C1_OBJ_NM_ENG
+	,C2
+	,C2_NM
+	,C2_NM_ENG
+	,C2_OBJ_NM
+	,C2_OBJ_NM_ENG
+	,C3
+	,C3_NM
+	,C3_NM_ENG
+	,C3_OBJ_NM
+	,C3_OBJ_NM_ENG
+)
+VALUES
+
+(
+	#{LINK_ID_SEQ}
+	,#{ITM_ID}
+	,#{ORG_ID}
+	,#{TBL_ID}
+	,#{DT}
+	,#{LINK_ID}
+	,#{PRD_DE}
+	,#{C1}
+	,#{CREATE_DT}
+	,#{PRD_SE}
+	,#{ITM_NM}
+	,#{ITM_NM_ENG}
+	,#{TBL_NM}
+	,#{UNIT_NM}
+	,#{UNIT_NM_ENG}
+	,#{C1_NM}
+	,#{C1_NM_ENG}
+	,#{C1_OBJ_NM}
+	,#{C1_OBJ_NM_ENG}
+	,#{C2}
+	,#{C2_NM}
+	,#{C2_NM_ENG}
+	,#{C2_OBJ_NM}
+	,#{C2_OBJ_NM_ENG}
+	,#{C3}
+	,#{C3_NM}
+	,#{C3_NM_ENG}
+	,#{C3_OBJ_NM}
+	,#{C3_OBJ_NM_ENG}
+)
+
+</insert>
+-->
+</mapper>
