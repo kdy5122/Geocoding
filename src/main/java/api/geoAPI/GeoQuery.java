@@ -116,7 +116,11 @@ public class GeoQuery {
 	} catch (Exception e) {
 		System.out.println("Exception 예외 : " +e.getMessage());
 		fail_keys.put("query_error",e.getMessage());
-	}
+       } finally {
+	   if (sqlSession != null) {
+           sqlSession.close();
+	  }  
+       }		  
 	  	   
        for(int i = 0 ;i<address.size();i++) {
     	   
